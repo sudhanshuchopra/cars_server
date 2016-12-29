@@ -3,7 +3,7 @@ from .models import Car
 from django.http import HttpResponse
 import json
 from .forms import PostForm
-
+from random import randint
 # Create your views here.
 def get_content(request):
 	p=request.GET.get('instance','')
@@ -36,6 +36,26 @@ def post_content(request):
 			return HttpResponse('OK')
 		else:
 			return render(request,"cars/post_form.html",{"form":form})
+
+def need_help(request):
+	k=request.GET.get('val','')
+	emp_list=['akash','varun','gagan','arun','shivam','mahesh','suresh']
+	if(k=='y'):
+		p=randint(0,6)
+		v=emp_list[p]
+		response_text="Mr "+emp_list[p] +" "+"will be there in a minute  to help you!!"
+		context={
+		"response_text":response_text
+		}
+		return HttpResponse(json.dumps(context),content_type="application/json")
+	else:
+		context={
+		"response_text":"If you need any help, contact us anytime"
+		}
+		return HttpResponse(json.dumps(context),content_type="application/json")
+
+
+
 
 
 
